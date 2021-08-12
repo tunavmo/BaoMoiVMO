@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".news.NewsFragment">
+
+    <LinearLayout
+        android:id="@+id/news_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout_news"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            app:itemIconTint="@color/bottom_nav_color"
+            app:itemTextColor="@color/bottom_nav_color"
+            app:menu="@menu/menu_bottom_nav_main"
+            app:tabIndicatorAnimationMode="elastic"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorFullWidth="false"
+            app:tabMode="auto"
+            app:tabSelectedTextColor="@color/white"
+            app:tabPaddingTop="5dp"
+            app:tabTextAppearance="@style/MyCustomTextAppearance"
+            app:tabTextColor="@color/tab_unchecked" />
+
+        <ImageView
+            android:layout_marginLeft="20dp"
+            android:id="@+id/btn_news_search"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/tab_layout_news"
+            android:src="@drawable/ic_baseline_search_24"
+            app:tint="@color/white" />
+
+    </LinearLayout>
+
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager_news"
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+        android:layout_below="@id/news_action_bar" />
+
+
+</RelativeLayout>

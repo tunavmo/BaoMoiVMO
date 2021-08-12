@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_nav_news"
+        android:icon="@drawable/news_icon"
+        android:title="@string/menu_bottom_nav_news" />
+    <item
+        android:id="@+id/menu_nav_video"
+        android:icon="@drawable/video_icon"
+        android:title="@string/menu_bottom_nav_video" />
+    <item
+        android:id="@+id/menu_nav_trending"
+        android:icon="@drawable/trending_icon"
+        android:title="@string/menu_bottom_nav_trending" />
+    <item
+        android:id="@+id/menu_nav_utility"
+        android:icon="@drawable/dashboard"
+        android:title="@string/menu_bottom_nav_tienich" />
+</menu>

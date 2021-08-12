@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Báo Mới</string>
+    <string name="menu_bottom_nav_news">Tin tức</string>
+    <string name="menu_bottom_nav_video">Video</string>
+    <string name="menu_bottom_nav_trending">Xu hướng</string>
+    <string name="menu_bottom_nav_tienich">Tiện ích</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
