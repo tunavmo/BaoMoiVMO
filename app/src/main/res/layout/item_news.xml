@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <data>
+
+        <variable
+            name="news"
+            type="com.vmodev.baomoivmo.news.data.model.News" />
+
+        <variable
+            name="viewmodel"
+            type="com.vmodev.baomoivmo.news.NewsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        tool:context=".HotNewsFragment">
+
+        <ImageView
+            android:id="@+id/news_image"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/news_background"
+            app:imageUrl="@{news.articles[0].urlToImage}" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/news_title"
+                android:layout_width="match_parent"
+                android:maxHeight="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@{news.articles[0].title}"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/news_published"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+
+                android:text="@{news.articles[0].publishedAt}"
+                android:textColor="@color/black" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>
