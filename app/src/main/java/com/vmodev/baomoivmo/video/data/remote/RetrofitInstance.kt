@@ -1,6 +1,6 @@
-package com.vmodev.baomoivmo.news.data.remote
+package com.vmodev.baomoivmo.video.data.remote
 
-import com.vmodev.baomoivmo.common.Constants.Companion.BASE_URL_NEWS
+import com.vmodev.baomoivmo.common.Constants.Companion.BASE_URL_VIDEO
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -13,14 +13,13 @@ class RetrofitInstance {
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
             val client = OkHttpClient.Builder().addInterceptor(logging).build()
             Retrofit.Builder()
-                .baseUrl(BASE_URL_NEWS)
+                .baseUrl(BASE_URL_VIDEO)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
         }
-
         val api by lazy {
-            retrofit.create(NewsAPI::class.java)
+            retrofit.create(VideoAPI::class.java)
         }
     }
 }

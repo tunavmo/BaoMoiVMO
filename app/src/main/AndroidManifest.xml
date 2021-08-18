@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BaoMoiVMO"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".video.ExoPlayerActivity"></activity>
         <activity android:name=".webview.WebviewActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SplashActivity">

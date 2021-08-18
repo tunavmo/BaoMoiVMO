@@ -14,6 +14,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -78,6 +79,15 @@ dependencies {
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     kapt 'com.github.bumptech.glide:compiler:4.12.0'
+
+    //Multi Dex Enable
+    implementation "androidx.multidex:multidex:2.0.1"
+
+    //Youtube Extractor
+    implementation 'com.github.HaarigerHarald:android-youtubeExtractor:v2.1.0'
+
+    //Exoplayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.15.0'
 
 
 }

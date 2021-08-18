@@ -11,7 +11,6 @@ import com.vmodev.baomoivmo.R
 import com.vmodev.baomoivmo.news.data.model.Article
 import kotlinx.android.synthetic.main.item_news.view.*
 
-
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -44,8 +43,8 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
             tvTitle.text = article.title
             tvDescription.text = article.description
             tvPublishedAt.text = article.publishedAt
-            setOnClickListener{
-                onItemClickListener?.let{it(article)}
+            setOnClickListener {
+                onItemClickListener?.let { it(article) }
             }
         }
     }
