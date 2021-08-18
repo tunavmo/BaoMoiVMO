@@ -15,11 +15,14 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="bottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">16sp</item>
         <item name="iconSize">40dp</item>
     </style>
+
     <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
     </style>
+
 </resources>

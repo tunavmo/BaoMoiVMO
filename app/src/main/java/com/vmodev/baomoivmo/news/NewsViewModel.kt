@@ -13,9 +13,18 @@ class NewsViewModel(
     val newsRepository: NewsRepository
 ) : ViewModel() {
     val topHeadlinesNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    val sportNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    val covidNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var topHeadlinesResponse: NewsResponse?=null
     var topHeadlinesNewsPage = 1
+
+    val sportNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var sportNewsResponse: NewsResponse?=null
+    var sportNewsPage = 1
+
+    val covidNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var covidNewsResponse: NewsResponse?=null
+    var covidNewsPage = 1
+
+
 
     init {
         getTopHeadlinesNews("us")
@@ -45,7 +54,16 @@ class NewsViewModel(
     private fun handleTopHeadlinesNewsResponse(response: Response<NewsResponse>):Resource<NewsResponse>{
         if(response.isSuccessful){
             response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
+                topHeadlinesNewsPage++
+                if(topHeadlinesResponse==null){
+                    topHeadlinesResponse = resultResponse
+                }
+                else{
+                    val oldArticles = topHeadlinesResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+                }
+                return Resource.Success(topHeadlinesResponse?:resultResponse)
             }
         }
         return Resource.Error(response.message())
@@ -54,7 +72,16 @@ class NewsViewModel(
     private fun handleSportNews(response: Response<NewsResponse>):Resource<NewsResponse>{
         if(response.isSuccessful){
             response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
+                sportNewsPage++
+                if(sportNewsResponse==null){
+                    sportNewsResponse = resultResponse
+                }
+                else{
+                    val oldArticles = sportNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+                }
+                return Resource.Success(sportNewsResponse?:resultResponse)
             }
         }
         return Resource.Error(response.message())
@@ -62,7 +89,16 @@ class NewsViewModel(
     private fun handleCovidNews(response: Response<NewsResponse>):Resource<NewsResponse>{
         if(response.isSuccessful){
             response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
+                covidNewsPage++
+                if(covidNewsResponse==null){
+                    covidNewsResponse = resultResponse
+                }
+                else{
+                    val oldArticles = covidNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+                }
+                return Resource.Success(covidNewsResponse?:resultResponse)
             }
         }
         return Resource.Error(response.message())
