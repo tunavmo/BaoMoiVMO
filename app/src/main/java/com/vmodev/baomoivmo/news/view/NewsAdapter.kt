@@ -3,47 +3,62 @@ package com.vmodev.baomoivmo.news.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vmodev.baomoivmo.R
-import com.vmodev.baomoivmo.databinding.FragmentHotNewsBinding
-import com.vmodev.baomoivmo.databinding.ItemNewsBinding
-import com.vmodev.baomoivmo.news.NewsViewModel
-import com.vmodev.baomoivmo.news.data.model.News
+import com.vmodev.baomoivmo.news.data.model.Article
+import kotlinx.android.synthetic.main.item_news.view.*
 
-class NewsAdapter: RecyclerView.Adapter<NewsViewHolder>() {
-    var _news = mutableListOf<News>()
 
-    fun setNewsList(newsList: List<News>) {
-        this._news = newsList.toMutableList()
-        notifyDataSetChanged()
-    }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder
-    {
-        val inflater = LayoutInflater.from(parent.context)
+class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
+    inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-        val binding = ItemNewsBinding.inflate(inflater, parent, false)
-        return NewsViewHolder(binding)
-    }
-//    =
-//        NewsViewHolder(
-//            LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false)
-//        )
+    private val diffCallBack = object : DiffUtil.ItemCallback<Article>() {
+        override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
+            return oldItem.url == newItem.url
+        }
 
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int){
-        val news = _news[position]
-        holder.binding.newsTitle.text = news.articles!![0].title
-        Glide.with(holder.itemView.context).load(news.articles!![0].urlToImage).into(holder.binding.newsImage)
-        holder.binding.newsPublished.text = news.articles!![0].publishedAt
+        override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
+            return oldItem == newItem
+        }
     }
 
-    override fun getItemCount(): Int = _news!!.size
-}
+    val diff = AsyncListDiffer(this, diffCallBack)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
+        return ArticleViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.item_news,
+                parent,
+                false
+            )
+        )
+    }
 
-class NewsViewHolder(val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
-//    val binding = ItemNewsBinding.bind(parent)
-//    fun bindTo(news: News, viewModel: NewsViewModel) {
-//        binding.news = news
-//        binding.viewmodel = viewModel
-//    }
+    override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
+        val article = diff.currentList[position]
+        holder.itemView.apply {
+            Glide.with(this).load(article.urlToImage).into(ivArticleImage)
+            tvSource.text = article.source.name
+            tvTitle.text = article.title
+            tvDescription.text = article.description
+            tvPublishedAt.text = article.publishedAt
+            setOnClickListener{
+                onItemClickListener?.let{it(article)}
+            }
+        }
+    }
+
+    private var onItemClickListener: ((Article) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Article) -> Unit) {
+        onItemClickListener = listener
+    }
+
+    override fun getItemCount(): Int {
+        return diff.currentList.size
+    }
+
+
 }

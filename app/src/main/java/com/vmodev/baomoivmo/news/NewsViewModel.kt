@@ -1,55 +1,80 @@
 package com.vmodev.baomoivmo.news
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.vmodev.baomoivmo.news.data.model.News
-import com.vmodev.baomoivmo.news.domain.GetNewsUseCase
-import com.vmodev.baomoivmo.news.repository.AppDispatchers
-import kotlinx.coroutines.withContext
+
 import androidx.lifecycle.*
-import com.bumptech.glide.Glide
-import com.vmodev.baomoivmo.news.data.remote.NewsServices
+import com.vmodev.baomoivmo.news.data.model.NewsResponse
 import com.vmodev.baomoivmo.news.repository.NewsRepository
-import retrofit2.Call
-import retrofit2.Callback
+import com.vmodev.baomoivmo.news.utils.Resource
+import kotlinx.coroutines.launch
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-class NewsViewModel constructor(private val newsRepository: NewsRepository) : ViewModel(){
+class NewsViewModel(
+    val newsRepository: NewsRepository
+) : ViewModel() {
+    val topHeadlinesNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    val sportNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    val covidNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var topHeadlinesNewsPage = 1
 
-     val _news = MutableLiveData<List<News>>()
+    init {
+        getTopHeadlinesNews("us")
+        getSportNews("sport")
+        getCovidNews("covid-19")
+    }
 
-    fun getNews() {
+    fun getTopHeadlinesNews(countryCode:String) = viewModelScope.launch {
+        topHeadlinesNews.postValue(Resource.Loading())
+        val response = newsRepository.getTopHeadlines(countryCode, topHeadlinesNewsPage)
+        topHeadlinesNews.postValue(handleTopHeadlinesNewsResponse(response))
+    }
 
+    fun getSportNews(query:String) = viewModelScope.launch {
+        sportNews.postValue(Resource.Loading())
+        val response = newsRepository.searchNews(query, topHeadlinesNewsPage)
+        sportNews.postValue(handleSportNews(response))
+    }
 
-        _news.value = newsRepository.getNews("covid-19")
+    fun getCovidNews(query:String) = viewModelScope.launch {
+        covidNews.postValue(Resource.Loading())
+        val response = newsRepository.searchNews(query, topHeadlinesNewsPage)
+        covidNews.postValue(handleCovidNews(response))
     }
 
 
+    private fun handleTopHeadlinesNewsResponse(response: Response<NewsResponse>):Resource<NewsResponse>{
+        if(response.isSuccessful){
+            response.body()?.let { resultResponse ->
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    private fun handleSportNews(response: Response<NewsResponse>):Resource<NewsResponse>{
+        if(response.isSuccessful){
+            response.body()?.let { resultResponse ->
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+    private fun handleCovidNews(response: Response<NewsResponse>):Resource<NewsResponse>{
+        if(response.isSuccessful){
+            response.body()?.let { resultResponse ->
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
 
 
-
-//    val news: LiveData<List<News>> get() = _news
-//    private var newsSource: LiveData<List<News>> = MutableLiveData()
-//
-//    init {
-//        getNews()
-//    }
-//    fun newsRefreshItem() = getNews()
-//
-//
-//    private fun getNews():MutableLiveData<List<News>> {
-//        _news.value = newsRepository.getNewsWithCache("covid-19")
-//        return _news
-//    }
-//    = viewModelScope.launch(dispatchers.main) {
-//        _news.removeSource(newsSource) // We make sure there is only one source of livedata (allowing us properly refresh)
-//        withContext(dispatchers.io) { newsSource = getNewsUseCase(forceRefresh = forceRefresh) }
-//        _news.addSource(newsSource) {
-//            _news.value = it
-////            if (it.status == Resource.Status.ERROR) _snackbarError.value = Event(R.string.an_error_happened)
-//        }
-//    }
+    private fun handleSearchNewsResponse(response: Response<NewsResponse>):Resource<NewsResponse>{
+        if(response.isSuccessful){
+            response.body()?.let { resultResponse ->
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
 }

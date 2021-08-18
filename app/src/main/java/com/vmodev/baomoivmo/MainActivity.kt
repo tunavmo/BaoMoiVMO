@@ -2,16 +2,25 @@ package com.vmodev.baomoivmo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.vmodev.baomoivmo.common.MainViewPagerAdapter
+import com.vmodev.baomoivmo.common.NewsViewModelProviderFactory
+import com.vmodev.baomoivmo.news.NewsViewModel
+import com.vmodev.baomoivmo.news.data.local.ArticlesDatabase
+import com.vmodev.baomoivmo.news.repository.NewsRepository
 
 class MainActivity : AppCompatActivity() {
-
+    lateinit var viewModel:NewsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val newsRepository = NewsRepository(ArticlesDatabase(this))
+        val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
+
+        viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
         val viewPager = findViewById<ViewPager2>(R.id.view_pager_main)
         val bottomNav: BottomNavigationView = findViewById(R.id.bottom_nav_main)
         val adapter = MainViewPagerAdapter(supportFragmentManager, lifecycle)
