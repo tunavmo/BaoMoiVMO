@@ -2,11 +2,23 @@
     <string name="app_name">Báo Mới</string>
     <string name="menu_bottom_nav_news">Tin tức</string>
     <string name="menu_bottom_nav_video">Video</string>
-    <string name="menu_bottom_nav_trending">Xu hướng</string>
+    <string name="menu_bottom_nav_trending">Tin đã xem</string>
     <string name="menu_bottom_nav_tienich">Tiện ích</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_web">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="hot_news">Tin nóng</string>
+    <string name="covid_news">COVID-19</string>
+    <string name="sport_news">Thể thao</string>
+    <string name="showbiz_news">Showbiz</string>
+    <string name="law_news">Pháp luật</string>
+    <string name="car_news">Xe</string>
+    <string name="tech_news">Công nghệ</string>
+    <string name="food_news">Ẩm thực</string>
+    <string name="health_news">Sức khỏe</string>
+    <string name="travel_news">Du lịch</string>
+    <string name="deleted">Đã xóa</string>
+    <string name="undo">Hủy</string>
 </resources>

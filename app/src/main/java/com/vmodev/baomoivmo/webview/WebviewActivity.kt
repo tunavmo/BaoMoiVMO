@@ -7,6 +7,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.vmodev.baomoivmo.R
 import com.vmodev.baomoivmo.news.NewsViewModel
+import com.vmodev.baomoivmo.news.data.model.Article
 import kotlinx.android.synthetic.main.activity_webview.*
 
 class WebviewActivity : AppCompatActivity() {
@@ -22,7 +23,6 @@ class WebviewActivity : AppCompatActivity() {
                 loadUrl(url!!)
             }
         }
-
     }
     inner class WebViewClient : android.webkit.WebViewClient() {
 

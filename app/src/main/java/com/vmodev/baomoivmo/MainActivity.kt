@@ -44,14 +44,11 @@ class MainActivity : AppCompatActivity() {
                     0 -> {
                         bottomNav.menu.findItem(R.id.menu_nav_news).isChecked = true
                     }
-                    1 -> {
+                    2 -> {
                         bottomNav.menu.findItem(R.id.menu_nav_video).isChecked = true
                     }
-                    2 -> {
-                        bottomNav.menu.findItem(R.id.menu_nav_trending).isChecked = true
-                    }
-                    3 -> {
-                        bottomNav.menu.findItem(R.id.menu_nav_utility).isChecked = true
+                    1 -> {
+                        bottomNav.menu.findItem(R.id.menu_nav_favorite).isChecked = true
                     }
                 }
                 super.onPageSelected(position)
@@ -64,14 +61,12 @@ class MainActivity : AppCompatActivity() {
                     viewPager.currentItem = 0
                 }
                 R.id.menu_nav_video -> {
-                    viewPager.currentItem = 1
-                }
-                R.id.menu_nav_trending -> {
                     viewPager.currentItem = 2
                 }
-                R.id.menu_nav_utility -> {
-                    viewPager.currentItem = 3
+                R.id.menu_nav_favorite -> {
+                    viewPager.currentItem = 1
                 }
+
             }
             false
         }

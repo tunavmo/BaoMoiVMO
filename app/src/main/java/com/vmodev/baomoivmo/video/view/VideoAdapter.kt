@@ -16,7 +16,7 @@ class VideoAdapter : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
 
     private val diffCallBack = object : DiffUtil.ItemCallback<Video>() {
         override fun areItemsTheSame(oldItem: Video, newItem: Video): Boolean {
-            return oldItem.url == newItem.url
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Video, newItem: Video): Boolean {
@@ -42,7 +42,7 @@ class VideoAdapter : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
             tvSourceVideo.text = video.source
             tvPublishedAtVideo.text = video.publishedAt
             tvTitleVideo.text = video.title
-            setOnItemClickListener {
+            setOnClickListener {
                 onItemClickListener?.let { it(video) }
             }
         }

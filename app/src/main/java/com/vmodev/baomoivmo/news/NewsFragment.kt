@@ -29,10 +29,19 @@ class NewsFragment : Fragment() {
         viewPager.adapter = adapter
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = "Tab ${(position + 1)}"
+
             when(position)
             {
-                0 -> tab.text = "Tab ${(position + 1)}"
+                0 -> tab.text = getString(R.string.hot_news)
+                1 -> tab.text = getString(R.string.covid_news)
+                2 -> tab.text = getString(R.string.sport_news)
+                3 -> tab.text = getString(R.string.showbiz_news)
+                4 -> tab.text = getString(R.string.law_news)
+                5 -> tab.text = getString(R.string.car_news)
+                6 -> tab.text = getString(R.string.tech_news)
+                7 -> tab.text = getString(R.string.food_news)
+                8 -> tab.text = getString(R.string.health_news)
+                9 -> tab.text = getString(R.string.travel_news)
             }
         }.attach()
 

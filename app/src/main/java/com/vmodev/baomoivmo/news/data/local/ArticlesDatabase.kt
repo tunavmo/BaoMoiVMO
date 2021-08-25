@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.vmodev.baomoivmo.common.Constants.Companion.DB_NAME
 import com.vmodev.baomoivmo.news.data.model.Article
 
 @Database(
@@ -28,7 +29,7 @@ abstract class ArticlesDatabase : RoomDatabase(){
         private fun createDatabase(context: Context) = Room.databaseBuilder(
             context.applicationContext,
             ArticlesDatabase::class.java,
-            "articles_db.db"
+            DB_NAME
         ).build()
     }
 }

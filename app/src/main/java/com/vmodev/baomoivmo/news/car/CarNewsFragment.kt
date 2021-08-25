@@ -1,4 +1,4 @@
-package com.vmodev.baomoivmo.news.hot_news
+package com.vmodev.baomoivmo.news.car
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,16 +12,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vmodev.baomoivmo.MainActivity
 import com.vmodev.baomoivmo.R
-import com.vmodev.baomoivmo.common.Constants.Companion.HOT_NEWS_FRAGMENT_TAG
+import com.vmodev.baomoivmo.common.Constants.Companion.CAR_NEWS_FRAGMENT_TAG
 import com.vmodev.baomoivmo.common.Constants.Companion.QUERY_PAGE_SIZE
+import com.vmodev.baomoivmo.common.Constants.Companion.TRAVEL_NEWS_FRAGMENT_TAG
 import com.vmodev.baomoivmo.news.NewsViewModel
 import com.vmodev.baomoivmo.news.utils.Resource
 import com.vmodev.baomoivmo.news.view.NewsAdapter
 import com.vmodev.baomoivmo.webview.WebviewActivity
+import kotlinx.android.synthetic.main.fragment_car_news.*
 import kotlinx.android.synthetic.main.fragment_hot_news.*
+import kotlinx.android.synthetic.main.fragment_travel_news.*
 
 
-class HotNewsFragment : Fragment(R.layout.fragment_hot_news) {
+class CarNewsFragment : Fragment(R.layout.fragment_car_news) {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
@@ -38,23 +41,23 @@ class HotNewsFragment : Fragment(R.layout.fragment_hot_news) {
         }
 
 
-        viewModel.topHeadlinesNews.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.carNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { newsResponse ->
                         newsAdapter.diff.submitList(newsResponse.articles.toList())
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE +2
-                        isLastPage = viewModel.topHeadlinesNewsPage == totalPages
+                        isLastPage = viewModel.carNewsPage == totalPages
                         if(isLastPage){
-                            rcvHotNews.setPadding(0,0,0,0)
+                            rcvTravelNews.setPadding(0,0,0,0)
                         }
                     }
                 }
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
-                        Log.e(HOT_NEWS_FRAGMENT_TAG, message)
+                        Log.e(CAR_NEWS_FRAGMENT_TAG, message)
                     }
                 }
                 is Resource.Loading -> {
@@ -65,12 +68,12 @@ class HotNewsFragment : Fragment(R.layout.fragment_hot_news) {
     }
 
     private fun hideProgressBar() {
-        paginationProgressBar.visibility = View.INVISIBLE
+        paginationProgressBarCar.visibility = View.INVISIBLE
         isLoading = false
     }
 
     private fun showProgressBar() {
-        paginationProgressBar.visibility = View.VISIBLE
+        paginationProgressBarCar.visibility = View.VISIBLE
         isLoading = true
     }
 
@@ -100,7 +103,7 @@ class HotNewsFragment : Fragment(R.layout.fragment_hot_news) {
             val isTotalMoreThanVisible = totalItemCount >= QUERY_PAGE_SIZE
             val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning && isTotalMoreThanVisible && isScrolling
             if(shouldPaginate){
-                viewModel.getTopHeadlinesNews("us")
+                viewModel.getCarNews()
                 isScrolling = false
             }
 
@@ -109,11 +112,11 @@ class HotNewsFragment : Fragment(R.layout.fragment_hot_news) {
 
     private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
-        rcvHotNews.apply {
+        rcvCarNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-            addOnScrollListener(this@HotNewsFragment.scrollListener)
+            addOnScrollListener(this@CarNewsFragment.scrollListener)
         }
     }
 }
